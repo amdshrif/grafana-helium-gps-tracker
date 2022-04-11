@@ -1,0 +1,38 @@
+# https://friendsoflittleyus.nl/grafana-helium-gps-tracker-on-raspberry-pi/
+version: "3.9"
+services:
+  influxdb:
+    image: influxdb:1.8
+    restart: always
+    volumes:
+      - ./influxdb:/var/lib/influxdb
+    ports:
+      - 8086:8086
+  mosquitto:
+    image: eclipse-mosquitto
+    restart: always
+    ports:
+      - 1883:1883
+      - 9001:9001
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+      - ./mosquitto/etc/mosquitto:/etc/mosquitto
+  grafana:
+    build: ./grafana/
+    image: grafana/grafana-prototype
+    restart: always
+    ports:
+      - 4000:3000
+    volumes:
+      - ./grafana/etc/grafana/grafana.ini:/etc/grafana/grafana.ini
+  nodered:
+    build: ./nodered/
+    image: nodered/nodered-prototype
+    restart: always
+    ports:
+      - 1880:1880
+    volumes:
+      - ./nodered/data:/data
+

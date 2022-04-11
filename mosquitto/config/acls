@@ -1,0 +1,18 @@
+#give full read access to $SYS topic.
+pattern read $SYS/#
+
+#give full read/write access to all topics
+user helium
+topic #
+
+#give **heliumconsole** read/write access to helium topic
+user heliumconsole
+topic helium/#
+
+#give **nodered** read access to all topics.
+user nodered
+topic read #
+
+#give **mqtt_explorer** read access to all topics.
+user mqtt_explorer
+topic read #
